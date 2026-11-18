@@ -2,7 +2,7 @@ export type MediaItem = {
   src?: string;
   alt: string;
   label?: string;
-  aspect?: "wide" | "portrait" | "square";
+  aspect?: "wide" | "portrait" | "square" | "landscape";
 };
 
 export type Project = {
@@ -19,10 +19,20 @@ export type Project = {
   role: string;
   tools: string[];
   gallery: MediaItem[];
-  videos: { title: string; url?: string }[];
+  videos: { title: string; url?: string; poster?: string; note?: string }[];
   process: string[];
   featuredSize: "hero" | "wide" | "portrait" | "standard";
 };
+
+const hermanArtwork = import.meta.glob<string>(
+  "../assets/herman/*.{png,jpg,jpeg,webp}",
+  { eager: true, query: "?url", import: "default" },
+);
+
+function hermanImage(name: string) {
+  const entry = Object.keys(hermanArtwork).find((path) => path.replace(/\.[^.]+$/, "") === `../assets/herman/${name}`);
+  return entry ? hermanArtwork[entry] : undefined;
+}
 
 export const projects: Project[] = [
   {
@@ -36,22 +46,29 @@ export const projects: Project[] = [
     coverImage: "/assets/herman-hero.jpg",
     coverAlt: "《赫尔曼的七日冒险》游戏主视觉，角色围绕持剑主角展开",
     description:
-      "一项围绕叙事、角色与世界观展开的视觉小说项目。现阶段页面以已上传的主视觉建立项目视觉基调，并为 CG、BG、角色立绘与四种世界 UI 预留清晰的扩展结构。",
+      "以戏剧演员赫尔曼为主角的视觉小说。从他站上舞台的姿态，到记忆里安的形象，再到同一片星空草原的三种变化，角色和场景共同承担叙事。",
     role: "视觉设定、游戏美术、角色与场景设计、界面视觉与交互设计。",
     tools: ["请补充实际使用工具", "Game UI", "Digital Painting"],
     gallery: [
       { src: "/assets/herman-hero.jpg", alt: "赫尔曼的七日冒险主视觉", label: "Key Visual", aspect: "wide" },
-      { alt: "待替换：角色设计与立绘", label: "Character Design", aspect: "portrait" },
-      { alt: "待替换：游戏 CG 画面", label: "Selected CG", aspect: "portrait" },
-      { alt: "待替换：场景与背景设计", label: "Background Art", aspect: "wide" },
-      { alt: "待替换：四世界界面设计", label: "Four Worlds UI", aspect: "wide" },
-      { alt: "待替换：游戏主菜单交互", label: "Main Menu Interaction", aspect: "wide" },
+      { src: hermanImage("herman"), alt: "赫尔曼的全身立绘，白衬衫搭配深棕马甲", label: "赫尔曼 · 角色立绘", aspect: "portrait" },
+      { src: hermanImage("ann"), alt: "安的全身立绘，金色长发、浅色连衣裙和蓝灰色腰带", label: "安 · 角色立绘", aspect: "portrait" },
+      { src: hermanImage("herman-expressions"), alt: "赫尔曼的五种表情，平静、悲伤或感动、愤怒、反胃和恐惧", label: "赫尔曼 · 表情拆分", aspect: "wide" },
+      { src: hermanImage("meadow-clear"), alt: "银河斜过星空，蓝绿色草坡上开着浅紫色花", label: "星空草原 CG · 晴夜", aspect: "wide" },
+      { src: hermanImage("meadow-rain"), alt: "斜雨落在银河下的草原", label: "星空草原 CG · 雨夜", aspect: "wide" },
+      { src: hermanImage("meadow-boat"), alt: "半透明的木船浮现在星空草原上", label: "星空草原 CG · 船影", aspect: "wide" },
+      { src: hermanImage("theater"), alt: "红色帷幕围住深蓝色的空舞台", label: "剧场背景", aspect: "wide" },
+      { src: hermanImage("four-worlds-ui"), alt: "《赫尔曼的七日冒险》的四世界游戏界面设计", label: "四世界界面设计", aspect: "wide" },
+      { src: hermanImage("blue-flower-logo"), alt: "蓝花工坊标志，蓝色花瓣线条围绕中央四角星", label: "蓝花工坊 · 标志", aspect: "square" },
+      { src: "/assets/sirius-logo.jpg", alt: "天狼星工作室标志", label: "天狼星 · 标志", aspect: "square" },
     ],
-    videos: [{ title: "待添加：游戏主菜单或交互演示视频" }],
+    videos: [{ title: "四种世界 UI 演示", url: "/videos/herman-four-worlds.mp4" }],
     process: [
-      "待补充：从叙事主题到视觉关键词的提炼过程。",
-      "待补充：角色、场景与界面如何建立统一的世界观。",
-      "待补充：交互原型的迭代与最终实现。",
+      "赫尔曼敏感而脆弱，对自己的身高缺乏自信。我用一个细小的踮脚动作表现他想让自己看起来更高的念头，让不安先从身体姿态里流露出来。服装参考戏剧演员的穿着，白衬衫和深色马甲勾勒出瘦弱的轮廓。高颧骨、凹陷的脸颊与深眼窝则把这份清瘦延续到面部。",
+      "表情拆分以平静为基准，通过眉眼和嘴形区分悲伤或感动、愤怒、反胃与恐惧。反胃时加入掩口动作，让情绪既能从五官读出，也能从动作辨认。",
+      "安是赫尔曼已故的未婚妻。我用金发、浅色连衣裙、荷叶边和束腰缎带保留她的少女感，再以温柔的神情表现记忆中明媚、亲切的初恋印象。",
+      "三张星空草原 CG 保留同一片草坡和斜贯画面的银河，通过晴夜、斜雨和浮现的船影改变同一地点的气氛。剧场背景以红色帷幕围合深蓝色舞台，把中央的留白交给角色和演出。",
+      "天狼星是夜空中最亮的恒星。标志用一大一小的星形对应天狼星 A 与伴星 B，让双星关系一眼可见。蓝绿色光晕把两颗星连在同一片光里。",
     ],
     featuredSize: "hero",
   },
@@ -65,16 +82,22 @@ export const projects: Project[] = [
     tags: ["Interactive Web", "Creative Coding", "Visual Experience"],
     coverImage: "/assets/quiet-hours.png",
     coverAlt: "Quiet Hours 雪山木屋沉浸式专注场景",
-    description: "围绕四种环境场景构建的沉浸式专注网页，探索氛围视觉、环境动态与功能界面的融合。",
+    description: "以五个室内场景构成的沉浸式专注网页。计时融入场景，静止时按钮隐去，移动鼠标即可唤出控件，让专注时的画面保持安静。",
     role: "视觉设计、场景体验、网页交互与前端实现。",
     tools: ["请补充实际使用工具", "Web Interaction"],
     gallery: [
-      { src: "/assets/quiet-hours.png", alt: "Quiet Hours 雪山木屋场景", label: "Winter Night Scene", aspect: "wide" },
-      { alt: "待替换：其他环境场景", label: "Scene Variations", aspect: "wide" },
-      { alt: "待替换：界面与交互细节", label: "Interaction Details", aspect: "square" },
+      { src: "/assets/quiet-hours.png", alt: "Quiet Hours 雪山木屋场景", label: "雪山木屋", aspect: "wide" },
+      { src: "/assets/quiet-hours/forest-glasshouse.jpg", alt: "雨中的玻璃屋，暖色灯光照亮沙发和书桌", label: "雨中玻璃屋 · 录屏画面", aspect: "landscape" },
+      { src: "/assets/quiet-hours/neon-city.jpg", alt: "深色卧室外的霓虹城市，青色计时融入夜景", label: "霓虹夜城 · 录屏画面", aspect: "landscape" },
+      { src: "/assets/quiet-hours/forest-window.jpg", alt: "卧室窗外的雨夜树林与浅绿色计时", label: "林间窗景 · 录屏画面", aspect: "landscape" },
+      { src: "/assets/quiet-hours/rainy-attic.jpg", alt: "雨滴落在阁楼的斜窗上，床边亮着烛光", label: "雨夜阁楼 · 录屏画面", aspect: "landscape" },
     ],
-    videos: [{ title: "待添加：环境动效与交互录屏" }],
-    process: ["待补充：场景概念与氛围测试。", "待补充：动态效果与专注功能的整合。"],
+    videos: [{ title: "环境动效与交互演示", url: "/videos/quiet-hours-demo.mp4" }],
+    process: [
+      "我把计时放进场景里，让数字的颜色和位置随环境变化。雪山木屋的暖光、玻璃屋外的风雨、霓虹夜城、林间的窗和烛光阁楼，给用户提供五种进入专注的氛围。",
+      "静止时，界面不常驻按钮。鼠标移动后控件才出现，右上角可进入全屏，左下角调节场景音量，底部中央设置专注人物，右下角查看专注记录。",
+      "场景切换放在画面左右两边，用户可以沿着阅读方向在不同空间之间移动。其余控件也靠边布置，把画面中心留给场景和计时。",
+    ],
     featuredSize: "wide",
   },
   {
@@ -107,7 +130,8 @@ export const projects: Project[] = [
     year: "2024—25",
     category: "Motion Design / Video Editing",
     tags: ["Motion", "Editing", "Video"],
-    coverAlt: "待替换：动态视觉或视频封面",
+    coverImage: "/assets/motion/xiaohongshu-cover.jpg",
+    coverAlt: "小红书短片封面，展示角色眼部特写和设计示意",
     description: "剪辑、动态视觉与视频内容创作的项目集合。",
     role: "待补充实际职责。",
     tools: ["待补充实际使用工具"],
@@ -115,7 +139,12 @@ export const projects: Project[] = [
       { alt: "待替换：动态视觉关键帧", label: "Motion Frames", aspect: "wide" },
       { alt: "待替换：视频剪辑画面", label: "Editing Selection", aspect: "wide" },
     ],
-    videos: [{ title: "待添加：视频作品（由用户自主播放）" }],
+    videos: [{
+      title: "小红书短片",
+      url: "/videos/xiaohongshu-edit.mp4",
+      poster: "/assets/motion/xiaohongshu-cover.jpg",
+      note: "频闪提示：视频包含闪烁画面。",
+    }],
     process: ["待补充：脚本、分镜与动态测试。"],
     featuredSize: "standard",
   },

@@ -26,7 +26,7 @@ export function SiteLayout() {
       <a className="skip-link" href="#main-content">跳至主要内容</a>
       <header className="site-header">
         <Link className="wordmark" to="/" aria-label="返回首页">
-          <span>YOUR NAME</span>
+          <span>张晓茹</span>
           <small>Visual Designer</small>
         </Link>
         <nav className="desktop-nav" aria-label="主要导航">
@@ -56,7 +56,7 @@ export function SiteLayout() {
           <Link className="footer-cta" to="/about#contact">Let’s make something<br />with intention.</Link>
         </div>
         <div className="footer-meta">
-          <span>© {new Date().getFullYear()} YOUR NAME</span>
+          <span>© {new Date().getFullYear()} 张晓茹</span>
           <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>Back to top ↑</button>
         </div>
       </footer>

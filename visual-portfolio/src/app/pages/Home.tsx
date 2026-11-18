@@ -8,7 +8,6 @@ export function Home() {
       <section className="hero page-shell">
         <div className="hero__index">
           <span>Portfolio / 2025</span>
-          <span>Based in [City]</span>
         </div>
         <h1>VISUAL WORLDS,<br /><em>MADE WITH</em> INTENTION.</h1>
         <div className="hero__details">
