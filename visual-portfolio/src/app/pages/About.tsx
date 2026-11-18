@@ -12,8 +12,8 @@ export function About() {
       <section className="about-intro">
         <p className="about-index">01 / Profile</p>
         <Reveal>
-          <p className="about-lede">我是一名专注于游戏美术、视觉设计与交互体验的创意设计师。</p>
-          <p>请在这里补充你的个人背景、设计理念、当前所在地与求职方向。保持真实、简洁，让招聘者快速理解你的方法与优势。</p>
+          <p className="about-lede">我是张晓茹，一名专注于游戏美术、视觉设计与交互体验的创意设计师。</p>
+          <p>我关注画面和交互如何共同营造氛围。从视觉小说的角色与场景，到专注网页的灯光和控件，我会用具体的视觉细节和操作节奏来表达体验。</p>
         </Reveal>
       </section>
       <section className="capabilities">
@@ -28,8 +28,8 @@ export function About() {
         <p className="about-index">03 / Contact</p>
         <div>
           <h2>Open to internships<br />& collaborations.</h2>
-          <a href="mailto:yourname@example.com">yourname@example.com <ArrowUpRight size={20} /></a>
-          <p>请替换为你的真实邮箱与所在地。</p>
+          <a href="mailto:djdjdjdjdjdj2003@outlook.com"><span>djdjdjdjdjdj2003@outlook.com</span><ArrowUpRight size={18} aria-hidden="true" /></a>
+          <a href="tel:15271173774"><span>152 7117 3774</span><ArrowUpRight size={18} aria-hidden="true" /></a>
           <Link to="/resume">View résumé</Link>
         </div>
       </section>

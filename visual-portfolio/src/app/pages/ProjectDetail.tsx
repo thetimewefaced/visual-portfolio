@@ -47,8 +47,8 @@ export function ProjectDetail() {
           {project.gallery.map((item, itemIndex) => (
             <Reveal className={`gallery-item gallery-item--${item.aspect ?? "wide"}`} key={`${item.label}-${itemIndex}`}>
               {item.src ? (
-                <button onClick={() => setLightbox({ src: item.src!, alt: item.alt })} aria-label={`放大查看：${item.label}`}>
-                  <img src={item.src} alt={item.alt} />
+                <button onClick={() => setLightbox({ src: item.src!, alt: item.alt })} aria-label={`放大查看：${item.label ?? item.alt}`}>
+                  <img src={item.src} alt={item.alt} loading="lazy" />
                 </button>
               ) : <Placeholder item={item} />}
               <div className="gallery-caption"><span>{String(itemIndex + 1).padStart(2, "0")}</span><span>{item.label}</span></div>
@@ -67,7 +67,15 @@ export function ProjectDetail() {
       {project.videos.length > 0 && (
         <section className="video-section page-shell">
           <p className="eyebrow">04 / Video & interaction</p>
-          {project.videos.map((video) => (
+          {project.videos.map((video) => video.url ? (
+            <figure className="project-video" key={video.title}>
+              <figcaption>{video.title}</figcaption>
+              {video.note && <p className="project-video__note">{video.note}</p>}
+              <video src={video.url} poster={video.poster} controls playsInline preload="metadata" aria-label={video.title}>
+                <a href={video.url}>下载视频</a>
+              </video>
+            </figure>
+          ) : (
             <div className="video-placeholder" key={video.title}>
               <Play size={26} strokeWidth={1.3} />
               <span>{video.title}</span>
