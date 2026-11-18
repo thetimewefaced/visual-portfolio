@@ -71,7 +71,7 @@ export function ProjectDetail() {
 
       {project.videos.length > 0 && (
         <section className="video-section page-shell">
-          <p className="eyebrow">04 / Video & interaction</p>
+          <p className="eyebrow">{project.process.length > 0 ? "04" : "03"} / Video & interaction</p>
           {project.videos.map((video) => video.url ? (
             <figure className="project-video" key={video.title}>
               <figcaption>{video.title}</figcaption>
