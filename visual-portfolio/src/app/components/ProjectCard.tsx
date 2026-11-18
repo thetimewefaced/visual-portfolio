@@ -8,7 +8,7 @@ export function ProjectCard({ project }: { project: Project }) {
   return (
     <Reveal className={`project-card project-card--${project.featuredSize}`}>
       <Link to={`/work/${project.slug}`} aria-label={`查看项目：${project.title}`}>
-        <div className="project-card__media">
+        <div className={project.coverFit === "contain" ? "project-card__media project-card__media--contain" : "project-card__media"}>
           {project.coverImage ? <img src={project.coverImage} alt={project.coverAlt} /> : <Placeholder item={{ alt: project.coverAlt, label: "Replace with project cover", aspect: "wide" }} />}
           <div className="project-card__overlay"><span>View project</span><ArrowUpRight size={18} /></div>
         </div>

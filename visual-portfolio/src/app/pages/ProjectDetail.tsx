@@ -20,7 +20,7 @@ export function ProjectDetail() {
   const next = projects[(index + 1) % projects.length];
 
   return (
-    <article className="project-detail">
+    <article className={`project-detail project-detail--${project.slug}`}>
       <header className="project-intro page-shell">
         <div className="project-intro__label"><span>{project.id}</span><span>{project.year}</span></div>
         <h1>{project.title}</h1>
@@ -28,21 +28,23 @@ export function ProjectDetail() {
         <p className="project-category">{project.category}</p>
       </header>
 
-      <button className="project-cover" onClick={() => project.coverImage && setLightbox({ src: project.coverImage, alt: project.coverAlt })} disabled={!project.coverImage} aria-label={project.coverImage ? "放大查看项目封面" : undefined}>
-        {project.coverImage ? <img src={project.coverImage} alt={project.coverAlt} /> : <Placeholder item={{ alt: project.coverAlt, label: "Replace with project cover", aspect: "wide" }} />}
-      </button>
+      {project.showDetailCover !== false && (
+        <button className={project.coverFit === "contain" ? "project-cover project-cover--contain page-shell" : "project-cover"} onClick={() => project.coverImage && setLightbox({ src: project.coverImage, alt: project.coverAlt })} disabled={!project.coverImage} aria-label={project.coverImage ? "放大查看项目封面" : undefined}>
+          {project.coverImage ? <img src={project.coverImage} alt={project.coverAlt} /> : <Placeholder item={{ alt: project.coverAlt, label: "Replace with project cover", aspect: "wide" }} />}
+        </button>
+      )}
 
-      <section className="project-facts page-shell">
-        <Reveal><p className="eyebrow">01 / Overview</p><p className="project-lede">{project.description}</p></Reveal>
+      <section className={project.description ? "project-facts page-shell" : "project-facts project-facts--compact page-shell"}>
+        {project.description && <Reveal><p className="eyebrow">01 / Overview</p><p className="project-lede">{project.description}</p></Reveal>}
         <Reveal className="facts-grid">
-          <div><h2>My role</h2><p>{project.role}</p></div>
+          {project.role && <div><h2>My role</h2><p>{project.role}</p></div>}
           <div><h2>Tools</h2><ul>{project.tools.map((tool) => <li key={tool}>{tool}</li>)}</ul></div>
-          <div><h2>Disciplines</h2><ul>{project.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul></div>
+          {project.tags.length > 0 && <div><h2>Disciplines</h2><ul>{project.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul></div>}
         </Reveal>
       </section>
 
       <section className="gallery-section page-shell">
-        <div className="gallery-heading"><p className="eyebrow">02 / Selected works</p><p>Click images to view full screen</p></div>
+        <div className="gallery-heading"><p className="eyebrow">02 / {project.galleryTitle ?? "Selected works"}</p><p>Click images to view full screen</p></div>
         <div className="gallery-grid">
           {project.gallery.map((item, itemIndex) => (
             <Reveal className={`gallery-item gallery-item--${item.aspect ?? "wide"}`} key={`${item.label}-${itemIndex}`}>
@@ -52,17 +54,20 @@ export function ProjectDetail() {
                 </button>
               ) : <Placeholder item={item} />}
               <div className="gallery-caption"><span>{String(itemIndex + 1).padStart(2, "0")}</span><span>{item.label}</span></div>
+              {item.description && <p className="gallery-description">{item.description}</p>}
             </Reveal>
           ))}
         </div>
       </section>
 
-      <section className="process-section page-shell">
-        <Reveal><p className="eyebrow">03 / Design process</p><h2>From intention<br />to visual language.</h2></Reveal>
-        <div className="process-list">
-          {project.process.map((step, stepIndex) => <Reveal key={step}><span>0{stepIndex + 1}</span><p>{step}</p></Reveal>)}
-        </div>
-      </section>
+      {project.process.length > 0 && (
+        <section className="process-section page-shell">
+          <Reveal><p className="eyebrow">03 / Design process</p><h2>From intention<br />to visual language.</h2></Reveal>
+          <div className="process-list">
+            {project.process.map((step, stepIndex) => <Reveal key={step}><span>0{stepIndex + 1}</span><p>{step}</p></Reveal>)}
+          </div>
+        </section>
+      )}
 
       {project.videos.length > 0 && (
         <section className="video-section page-shell">
