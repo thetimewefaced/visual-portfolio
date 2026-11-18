@@ -156,7 +156,12 @@ export const projects: Project[] = [
       { src: "/assets/motion/douyin-stats-1.jpg", alt: "抖音作品列表与播放数据截图一", label: "抖音 · 作品数据一", aspect: "narrow" },
       { src: "/assets/motion/douyin-stats-2.jpg", alt: "抖音作品列表与播放数据截图二", label: "抖音 · 作品数据二", aspect: "narrow" },
     ],
-    videos: [],
+    videos: [{
+      title: "小红书短片",
+      url: "/videos/xiaohongshu-edit.mp4",
+      poster: "/assets/motion/xiaohongshu-cover.jpg",
+      note: "频闪提示：视频包含闪烁画面。",
+    }],
     process: [],
     featuredSize: "standard",
   },
