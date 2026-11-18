@@ -7,7 +7,7 @@ export function Home() {
     <>
       <section className="hero page-shell">
         <div className="hero__index">
-          <span>Portfolio / 2025</span>
+          <span>Portfolio / 2026</span>
         </div>
         <h1>VISUAL WORLDS,<br /><em>MADE WITH</em> INTENTION.</h1>
         <div className="hero__details">
@@ -21,7 +21,7 @@ export function Home() {
         <Reveal className="section-heading">
           <p className="eyebrow">Selected works</p>
           <h2 id="selected-works">A selection of visual<br />stories & systems.</h2>
-          <p>精选项目 / 2023—2025</p>
+          <p>精选项目 / 2026</p>
         </Reveal>
         <div className="project-grid">
           {projects.map((project) => <ProjectCard project={project} key={project.id} />)}
